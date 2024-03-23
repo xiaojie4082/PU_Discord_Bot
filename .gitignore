@@ -1,0 +1,5 @@
+/__pycache__
+.env
+/api/client_secret.json
+/api/token.json
+/api/__pycache__
