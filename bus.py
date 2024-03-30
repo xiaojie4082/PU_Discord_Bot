@@ -106,7 +106,7 @@ def EstimateTime():
         with open(os.getenv("BUS_PATH"), 'w') as f:
             json.dump(EstimateTime, f)
     except Exception as e:
-        print(f"Error occurred: {e}")
+        print(f"An error occurred while opening Bus_Data.json: {e}")
 
 def run_estimate():
     EstimateTime()

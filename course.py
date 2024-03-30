@@ -28,11 +28,12 @@ def person(selectno: int):
                         course["remaining"] = value
             try:
                 course["remaining"] = int(course["limit"]) - int(course["enrollment"])
-            except:
+            except Exception as e:
+                print(f"Error calculating remaining seats: {e}")
                 course["enrollment"] = int(course["limit"]) - int(course["remaining"])
         return course
     except Exception as e:
-        print(e)
+        print(f"Error retrieving course information: {e}")
         return course
 
 def syllabus(year: str, selectno: str):
@@ -74,8 +75,10 @@ def syllabus(year: str, selectno: str):
                     # AI 分析
                     course["ai_mes"] = f"以下是課程綱要，請提供我約 100~200 字修課分析，請不要列點、不要標題。\n- 課程名稱：{course['name']}\n- 授課教師：{course['instructor']}\n- 上課時段：{course['time']}\n- 課程簡介：{course['description']}\n- 評分方式：{course['grading']}"
                     return course
+        else:
+            raise Exception("Failed to retrieve syllabus information. Response status code: " + str(response.status_code))
     except Exception as e:
-        print(e)
+        print("Error retrieving syllabus information: " + str(e))
         return course
                 
 def search(year: str, course_teacher: str, keyword: str):
@@ -104,7 +107,9 @@ def search(year: str, course_teacher: str, keyword: str):
                         '上課時間地點': schedule
                     }   
                     course_data.append(course_info)
-        return course_data, url
+            return course_data, url
+        else:
+            raise Exception(f"Failed to retrieve course information. Response status code: {response.status_code}")
     except Exception as e:
-        print(e)
+        print(f"Error retrieving course information: {e}")
         return course_data, url

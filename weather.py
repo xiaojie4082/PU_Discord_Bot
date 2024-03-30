@@ -22,7 +22,7 @@ def today_weather():
                 weather[weather_element["elementName"]] = weather_element["time"][0]["parameter"]
             weather_data.append(weather)
     except Exception as e:
-        print(f"Error fetching data for CWA: {e}")
+        print(f"Error fetching data for CWA: {str(e)}")
 
     try:
         # https://openweathermap.org/weather-conditions
@@ -50,16 +50,16 @@ def today_weather():
             "乾燥": "http://openweathermap.org/img/wn/50d@2x.png"
         }
         icon_url = Wx_icon_url[weather_data[0]["Wx"]["parameterName"]]
-    except:
+    except Exception as e:
         icon_url = ""
-        print(f"Error occurred: {e}")
+        print(f"Error occurred while getting weather icon URL: {str(e)}")
 
     try:
         data = requests.get(url_FC0032021)
         data = json.loads(data.text)
         weather_info = data["cwaopendata"]["dataset"]["parameterSet"]["parameter"][0]["parameterValue"]
-    except:
+    except Exception as e:
         weather_info = ""
-        print(f"Error occurred: {e}")
+        print(f"Error occurred while getting weather info: {str(e)}")
 
     return weather_data, weather_info, icon_url

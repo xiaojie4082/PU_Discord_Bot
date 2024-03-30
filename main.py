@@ -83,7 +83,7 @@ async def weather_background_task():
         # channel = bot.get_channel(1163298141563527250)
         # await channel.send(embed=embed)
     except Exception as e:
-        print(f"Error occurred: {e}")
+        print(f"[weather_background_task] Error occurred: {e}")
 
 @tasks.loop(minutes=1)
 async def bus_background_task():
@@ -128,7 +128,7 @@ async def bus_background_task():
         # channel = bot.get_channel(1165339189462696118)
         # await channel.send(embed=embed)
     except Exception as e:
-        print(f"Error occurred: {e}")
+        print(f"[bus_background_task] Error occurred: {e}")
 
 @tasks.loop(seconds=180)
 async def news_background_task():
@@ -151,7 +151,7 @@ async def news_background_task():
             await channel.send(embed=embed)
 
     except Exception as e:
-        print(f"[news_background_task()] Error occurred: {e}")
+        print(f"[news_background_task] Error occurred: {e}")
 
 # =============== 機器人主程式 ===============
 

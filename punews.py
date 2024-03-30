@@ -10,6 +10,7 @@ def get_summary(href):
         soup = BeautifulSoup(summary, 'html.parser')
         summary = soup.get_text()
     except Exception as e:
+        print(f"[get_summary()] Error occurred: {e}")
         summary = ""
     return summary
 
@@ -24,10 +25,13 @@ def get_pu_news():
         title = info_items[0].find('a').text.strip()
         href = info_items[0].find('a')['href']
 
-        if(href[0] == '/'):
+        if href[0] == '/':
             href = "https://www.pu.edu.tw" + href
 
         summary = get_summary(href)
     except Exception as e:
         print(f"[get_pu_news()] Error occurred: {e}")
+        title = ""
+        href = ""
+        summary = ""
     return title, href, summary
