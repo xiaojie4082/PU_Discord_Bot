@@ -33,6 +33,7 @@ def today_weather():
             "晴朗": "http://openweathermap.org/img/wn/01d@2x.png",
             "陰天": "http://openweathermap.org/img/wn/50d@2x.png",
             "小雨": "http://openweathermap.org/img/wn/10d@2x.png",
+            "多雲短暫陣雨或雷雨": "http://openweathermap.org/img/wn/10d@2x.png",
             "陣雨": "http://openweathermap.org/img/wn/09d@2x.png",
             "雷陣雨": "http://openweathermap.org/img/wn/11d@2x.png",
             "小雪": "http://openweathermap.org/img/wn/13d@2x.png",
