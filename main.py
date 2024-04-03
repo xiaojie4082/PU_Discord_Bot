@@ -143,7 +143,7 @@ async def news_background_task():
                 file.write(href)
             
             data = {'message': href, 'time': int(time.time()), 'title': title + " - 靜宜大學校首頁"}
-            response = requests.post('https://puhub.org/api/new_announcement.php', data=data)
+            response = requests.post('http://puhub.org/api/new_announcement.php', data=data)
 
             embed = discord.Embed(title=title, url=href, description=summary+" <@&1148682637972602880>", color=0xffffff)
             embed.set_footer(text="資料來源:靜宜大學校首頁/公告總覽")

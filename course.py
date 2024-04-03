@@ -66,7 +66,7 @@ def syllabus(year: str, selectno: str):
                     # 評分方式及比重
                     course["grading"] = soup.find('th', string="評分方式及比重Grading Methods and Ratio ").find_next('td').text.strip() or "NULL"
                     # PUHub 課程評論
-                    course["url"] = f"https://puhub.org/api/course_evaluation.php?course={course['name']}&teacher={course['instructor']}"
+                    course["url"] = f"http://puhub.org/api/course_evaluation.php?course={course['name']}&teacher={course['instructor']}"
                     response = requests.get(course["url"])
                     datas = response.json()
                     course["evaluation"] = "```NULL```"
