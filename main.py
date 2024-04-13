@@ -106,19 +106,19 @@ async def bus_background_task():
             "聖母堂 / 靜園餐廳\n" +
             ":bus: `162` `" + Estimate["162"][3] + "`\n" +
             ":bus: `301` `" + Estimate["301"][3] + "`\n" +
-            ":bus: `368` `" + Estimate["368"][3] + "`\n\n" +
+            ":bus: `368` `" + Estimate["368"][3] + "`\n"
 
-            "靜宜大學(專用道) - 往市區 / 往海線\n" +
-            ":bus: `300` `" + Estimate["300"][0] + " / " + Estimate["300"][1] + "`\n" +
-            ":bus: `302` `" + Estimate["302"][0] + " / " + Estimate["302"][1] + "`\n" +
-            ":bus: `303` `" + Estimate["303"][0] + " / " + Estimate["303"][1] + "`\n" +
-            ":bus: `304` `" + Estimate["304"][0] + " / " + Estimate["304"][1] + "`\n" +
-            ":bus: `305` `" + Estimate["305"][0] + " / " + Estimate["305"][1] + "`\n" +
-            ":bus: `306` `" + Estimate["306"][0] + " / " + Estimate["306"][1] + "`\n" +
-            ":bus: `307` `" + Estimate["307"][0] + " / " + Estimate["307"][1] + "`\n" +
-            ":bus: `308` `" + Estimate["308"][0] + " / " + Estimate["308"][1] + "`\n" +
-            ":bus: `309` `" + Estimate["309"][0] + " / " + Estimate["309"][1] + "`\n" +
-            ":bus: `310` `" + Estimate["310"][0] + " / " + Estimate["310"][1] + "`\n"
+            # "靜宜大學(專用道) - 往市區 / 往海線\n" +
+            # ":bus: `300` `" + Estimate["300"][0] + " / " + Estimate["300"][1] + "`\n" +
+            # ":bus: `302` `" + Estimate["302"][0] + " / " + Estimate["302"][1] + "`\n" +
+            # ":bus: `303` `" + Estimate["303"][0] + " / " + Estimate["303"][1] + "`\n" +
+            # ":bus: `304` `" + Estimate["304"][0] + " / " + Estimate["304"][1] + "`\n" +
+            # ":bus: `305` `" + Estimate["305"][0] + " / " + Estimate["305"][1] + "`\n" +
+            # ":bus: `306` `" + Estimate["306"][0] + " / " + Estimate["306"][1] + "`\n" +
+            # ":bus: `307` `" + Estimate["307"][0] + " / " + Estimate["307"][1] + "`\n" +
+            # ":bus: `308` `" + Estimate["308"][0] + " / " + Estimate["308"][1] + "`\n" +
+            # ":bus: `309` `" + Estimate["309"][0] + " / " + Estimate["309"][1] + "`\n" +
+            # ":bus: `310` `" + Estimate["310"][0] + " / " + Estimate["310"][1] + "`\n"
         , color=0xffffff)
         embed.set_footer(text="更新時間：" + current_time + "\n" + "資料來源：https://tdx.transportdata.tw")
         message = await bot.get_channel(1165339189462696118).fetch_message(1165343193324327064)
@@ -294,7 +294,7 @@ async def 課程綱要(
 
     gs = requests.post('http://localhost:5000/gschat', json={'message':course["ai_mes"]})
     embed.remove_field(3)
-    embed.add_field(name="AI 分析：", value=gs, inline=False)
+    embed.add_field(name="AI 分析：", value="```"+gs.text+"```", inline=False)
     await message.edit_original_response(embed=embed, view=view)
 
     # 多線程
