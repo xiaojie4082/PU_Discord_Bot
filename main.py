@@ -11,7 +11,7 @@ from weather import today_weather
 # 匯入 punew 模組
 from punews import get_pu_news
 
-# 匯入 time 模組
+# 匯入 time 套件
 import time
 import datetime
 
@@ -79,7 +79,6 @@ async def weather_background_task():
         message = await bot.get_channel(1163298141563527250).fetch_message(1168157292651360328)
         await message.edit(embed=embed, view=view)
 
-        # 初始訊息
         # channel = bot.get_channel(1163298141563527250)
         # await channel.send(embed=embed)
     except Exception as e:

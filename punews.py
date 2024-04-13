@@ -3,12 +3,10 @@ from bs4 import BeautifulSoup
 
 def get_summary(href):
     try:
-        url = href
-        html = requests.get(url)
+        html = requests.get(href)
         soup = BeautifulSoup(html.text, 'html.parser')
         summary = soup.find('meta', {'name': 'description'})['content'].strip()
-        soup = BeautifulSoup(summary, 'html.parser')
-        summary = soup.get_text()
+        summary = BeautifulSoup(summary, 'html.parser').get_text()
     except Exception as e:
         print(f"[get_summary()] Error occurred: {e}")
         summary = ""
@@ -25,7 +23,7 @@ def get_pu_news():
         title = info_items[0].find('a').text.strip()
         href = info_items[0].find('a')['href']
 
-        if href[0] == '/':
+        if href.startswith('/'):
             href = "https://www.pu.edu.tw" + href
 
         summary = get_summary(href)
