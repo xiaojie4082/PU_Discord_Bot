@@ -26,6 +26,7 @@ def today_weather():
 
     try:
         # https://openweathermap.org/weather-conditions
+        # https://opendata.cwa.gov.tw/opendatadoc/MFC/A0012-001.pdf
         Wx_icon_url = {
             "多雲": "http://openweathermap.org/img/wn/03d@2x.png",
             "多雲時晴": "http://openweathermap.org/img/wn/02d@2x.png",

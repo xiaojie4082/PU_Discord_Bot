@@ -137,17 +137,17 @@ async def news_background_task():
         with open(os.getenv("NEWS_PATH"), "r") as file:
             file_content = file.read()
             
-        if file_content != href:
+        if file_content != href and href != "":
             with open(os.getenv("NEWS_PATH"), "w") as file:
                 file.write(href)
             
-            data = {'message': href, 'time': int(time.time()), 'title': title + " - 靜宜大學校首頁"}
-            response = requests.post('http://puhub.org/api/new_announcement.php', data=data)
-
             embed = discord.Embed(title=title, url=href, description=summary+" <@&1148682637972602880>", color=0xffffff)
             embed.set_footer(text="資料來源:靜宜大學校首頁/公告總覽")
             channel = bot.get_channel(986528578197942333)
             await channel.send(embed=embed)
+
+            data = {'message': href, 'time': int(time.time()), 'title': title + " - 靜宜大學校首頁"}
+            response = requests.post('http://puhub.org/api/new_announcement.php', data=data)
 
     except Exception as e:
         print(f"[news_background_task] Error occurred: {e}")
