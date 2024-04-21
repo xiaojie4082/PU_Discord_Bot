@@ -102,12 +102,11 @@ def EstimateTime():
         for uid in uids: 
             thread = threading.Thread(target=fetch_thread, args=(route, uid))                                                                
             thread.start()
-    time.sleep(2)
+            thread.join()
 
     # try:
     #     with open(os.getenv("BUS_PATH"), 'w') as f:
     #         json.dump(EstimateTime, f)
     # except Exception as e:
     #     print(f"An error occurred while opening Bus_Data.json: {e}")
-    print(EstimateTime)
     return EstimateTime
