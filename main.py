@@ -11,6 +11,9 @@ from weather import today_weather
 # 匯入 punew 模組
 from punews import get_pu_news
 
+# 
+from bus import EstimateTime
+
 # 匯入 time 套件
 import time
 import datetime
@@ -31,7 +34,6 @@ import discord
 from discord import option
 from discord.ext import commands
 from discord.ext import tasks
-import threading
 
 # =============== 機器人初始設定 ===============
 
@@ -87,8 +89,7 @@ async def weather_background_task():
 @tasks.loop(minutes=1)
 async def bus_background_task():
     try:
-        with open(os.getenv("BUS_PATH"), 'r') as f:
-            Estimate = json.load(f)
+        Estimate = EstimateTime()
 
         current_time = time.strftime("%Y/%m/%d %H:%M:%S", time.localtime())
         embed=discord.Embed(title="公車即時到站時間", description=
@@ -295,16 +296,6 @@ async def 課程綱要(
     embed.remove_field(3)
     embed.add_field(name="AI 分析：", value="```"+gs.text+"```", inline=False)
     await message.edit_original_response(embed=embed, view=view)
-
-    # 多線程
-    # def gs_thread():
-    #     gs = "```" + gs_chat(course["ai_mes"]) + "```"
-    #     embed.remove_field(3)
-    #     embed.add_field(name="AI 分析：", value=gs, inline=False)
-    #     message.edit_original_response(embed=embed, view=view)
-    
-    # thread = threading.Thread(target=gs_thread)
-    # thread.start()
 
 # /課程餘額
 @bot.slash_command(name="課程餘額", description="查詢目前課程餘額")

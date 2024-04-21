@@ -82,6 +82,7 @@ def EstimateTime():
                 else:
                     EstimateTime[route].append("進站中...")
             else:    
+                print("flag")
                 target_time = time.strptime(data[0]["NextBusTime"], "%Y-%m-%dT%H:%M:%S%z")
                 target_time = time.mktime(target_time)
                 diff_minute = int(target_time - now) / 60
@@ -93,6 +94,7 @@ def EstimateTime():
                     EstimateTime[route].append("尚未發車")         
         except Exception as e:
             EstimateTime[route].append("尚未發車")
+            # print(url)
             print(f"Error fetching data for route {route} and uid {uid}: {e}")
 
     for route, uids in stop_dict.items(): 
@@ -100,16 +102,12 @@ def EstimateTime():
         for uid in uids: 
             thread = threading.Thread(target=fetch_thread, args=(route, uid))                                                                
             thread.start()
-    thread.join()
+    time.sleep(2)
 
-    try:
-        with open(os.getenv("BUS_PATH"), 'w') as f:
-            json.dump(EstimateTime, f)
-    except Exception as e:
-        print(f"An error occurred while opening Bus_Data.json: {e}")
-
-def run_estimate():
-    EstimateTime()
-    threading.Timer(60, run_estimate).start()
-
-run_estimate()
+    # try:
+    #     with open(os.getenv("BUS_PATH"), 'w') as f:
+    #         json.dump(EstimateTime, f)
+    # except Exception as e:
+    #     print(f"An error occurred while opening Bus_Data.json: {e}")
+    print(EstimateTime)
+    return EstimateTime
