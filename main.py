@@ -223,7 +223,7 @@ async def freshman(
 @bot.slash_command(name="搜尋課程", description="搜尋目前開課課程")
 @option("學期",
     description="選擇要搜尋的學期", 
-    choices=["1111", "1112", "1121", "1122"], 
+    choices=["1111", "1112", "1121", "1122", "1131"], 
     required=True   
 )
 @option("類別",
@@ -262,7 +262,7 @@ async def 尋找課程(
 @bot.slash_command(name="課程綱要", description="查詢目前課程綱要")
 @option("學期",
     description="選擇要搜尋的學期", 
-    choices=["1111", "1112", "1121", "1122"], 
+    choices=["1111", "1112", "1121", "1122", "1131"], 
     required=True   
 )
 @option(
