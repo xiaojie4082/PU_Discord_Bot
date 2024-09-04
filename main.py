@@ -217,7 +217,15 @@ async def help(
 ):
     message = await ctx.respond('正在處理中...')
     response = requests.post('http://localhost:5000/puchat', json={'message':訊息})
-    await message.edit_original_response(content=response.text)
+    # 新增三個按鈕 ":thumbsup:" ":thumbsdown:" ":redcross:"
+    view = discord.ui.View()
+    button = discord.ui.Button(label="👍", style=discord.ButtonStyle.green)
+    view.add_item(button)
+    button = discord.ui.Button(label="👎", style=discord.ButtonStyle.green)
+    view.add_item(button)
+    button = discord.ui.Button(label="❌", style=discord.ButtonStyle.danger)
+    view.add_item(button)
+    await message.edit_original_response(content=response.text, view=view)
 
 # /尋找課程
 @bot.slash_command(name="搜尋課程", description="搜尋目前開課課程")
