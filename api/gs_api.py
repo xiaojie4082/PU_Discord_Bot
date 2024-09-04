@@ -6,8 +6,7 @@ genai.configure(credentials=creds)
 generation_config = {
   "temperature": 0.5,
   "top_p": 1,
-  "max_output_tokens": 100,
-  "response_mime_type": "text/plain",
+  "max_output_tokens": 100
 }
 safety_settings = []
 
