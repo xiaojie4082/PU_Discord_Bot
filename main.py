@@ -219,11 +219,11 @@ async def help(
     response = requests.post('http://localhost:5000/puchat', json={'message':訊息})
     # 新增三個按鈕 ":thumbsup:" ":thumbsdown:" ":redcross:"
     view = discord.ui.View()
-    button = discord.ui.Button(label="👍", style=discord.ButtonStyle.green)
+    button = discord.ui.Button(label="已解決", style=discord.ButtonStyle.green)
     view.add_item(button)
-    button = discord.ui.Button(label="👎", style=discord.ButtonStyle.green)
+    button = discord.ui.Button(label="未解決", style=discord.ButtonStyle.green)
     view.add_item(button)
-    button = discord.ui.Button(label="❌", style=discord.ButtonStyle.danger)
+    button = discord.ui.Button(label="回報錯誤", style=discord.ButtonStyle.danger)
     view.add_item(button)
     await message.edit_original_response(content=response.text, view=view)
 
