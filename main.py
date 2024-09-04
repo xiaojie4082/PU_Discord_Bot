@@ -204,19 +204,19 @@ async def chat(
     response = requests.post('http://localhost:5000/gschat', json={'message':訊息})
     await message.edit_original_response(content=response.text)
 
-# /freshman_chat
-@bot.slash_command(name='freshman', description='freshman gemini-pro')
+# /help
+@bot.slash_command(name='help', description='校園助手')
 @option(
     "訊息",
     description="請輸入訊息或問題",
     required=True
 )
-async def freshman(
+async def help(
     ctx: discord.ApplicationContext,
     訊息: str
 ):
     message = await ctx.respond('正在處理中...')
-    response = requests.post('http://localhost:5000/freshmanchat', json={'message':訊息})
+    response = requests.post('http://localhost:5000/puchat', json={'message':訊息})
     await message.edit_original_response(content=response.text)
 
 # /尋找課程
