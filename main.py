@@ -1,18 +1,16 @@
-# =============== 匯入相關套件 ===============
+# =============== 匯入 mods ===============
 
-# 匯入 course 模組
-from course import person
-from course import syllabus
-from course import search
+from mods.course import person
+from mods.course import syllabus
+from mods.course import search
 
-# 匯入 weather 模組
-from weather import today_weather
+from mods.weather import today_weather
 
-# 匯入 punew 模組
-from punews import get_pu_news
+from mods.punews import get_pu_news
 
-# 
-from bus import EstimateTime
+from mods.bus import EstimateTime
+
+# =============== 匯入必要套件 =============
 
 # 匯入 time 套件
 import time
@@ -165,30 +163,6 @@ async def on_ready():
     bus_background_task.start()
     news_background_task.start()
 
-    # 初始訊息 - 社群網站
-    # embed=discord.Embed(title="PUHub - 你在校園生活中不可或缺的夥伴", color=0xffffff)
-    # embed.set_image(url="https://cdn.discordapp.com/attachments/1152904955099893820/1176784764464799764/image.png?ex=65702137&is=655dac37&hm=e979775bcd00996ef7ebb608fda371a79e887105949f054046cbb2973cbded26&")
-    # view = discord.ui.View()
-    # button = discord.ui.Button(label="社群網站", url="https://puhub.org/")
-    # view.add_item(button)
-    # button = discord.ui.Button(label="匿名留言", url="https://puhub.org/services_send.php")
-    # view.add_item(button)
-    # button = discord.ui.Button(label="選課評價", url="https://puhub.org/services_courses.php")
-    # view.add_item(button)
-    # button = discord.ui.Button(label="實用連結", url="https://puhub.org/services_resource.php")
-    # view.add_item(button)
-    # channel = bot.get_channel(1141266582601998416)
-    # await channel.send(embed=embed, view=view)
-
-# /ping
-@bot.slash_command(name="ping", description="檢查機器人的延遲") 
-async def ping(ctx): 
-    start = time.time()
-    message = await ctx.respond('等待中...')
-    end = time.time()
-    latency = (end - start) * 1000
-    await message.edit_original_response(content=f'{latency:.1f} ms')
-
 # /gs_chat
 @bot.slash_command(name='chat', description='gemini-pro')
 @option(
@@ -324,6 +298,28 @@ async def 課程餘額(
     embed.add_field(name="課程餘額：", value=course["remaining"], inline=True)
     await ctx.respond(embed=embed)
 
+# =============== 導入 cmds ===============
+
+@bot.command()
+async def load(ctx, extension):
+    bot.load_extension(f'cmds.{extension}')
+    await ctx.send(f'Loaded {extension} done.')
+
+@bot.command()
+async def unload(ctx, extension):
+    bot.unload_extension(f'cmds.{extension}')
+    await ctx.send(f'Un - Loaded {extension} done.')
+
+@bot.command()
+async def reload(ctx, extension):
+    bot.reload_extension(f'cmds.{extension}')
+    await ctx.send(f'Re - Loaded {extension} done.')
+
+for Filename in os.listdir("./cmds"):
+    if Filename.endswith(".py"):
+        bot.load_extension(f"cmds.{Filename[:-3]}")
+
 # =============== 啟動機器人 ===============
 
-bot.run(bot_token)
+if __name__ == "__main__":
+    bot.run(bot_token)

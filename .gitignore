@@ -3,3 +3,11 @@
 /api/client_secret.json
 /api/token.json
 /api/__pycache__
+cmds/__pycache__/main.cpython-311.pyc
+cmds/__pycache__/react.cpython-311.pyc
+cmds/__pycache__/scheduler.cpython-311.pyc
+core/__pycache__/classes.cpython-311.pyc
+mods/__pycache__/bus.cpython-311.pyc
+mods/__pycache__/course.cpython-311.pyc
+mods/__pycache__/punews.cpython-311.pyc
+mods/__pycache__/weather.cpython-311.pyc
