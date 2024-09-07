@@ -1,7 +1,6 @@
 import discord
 from discord import option
 from discord.ext import commands
-from discord.ext import tasks
 
 from core.classes import Cog_Extension
 

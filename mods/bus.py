@@ -95,7 +95,7 @@ def EstimateTime():
         except Exception as e:
             EstimateTime[route].append("尚未發車")
             # print(url)
-            print(f"Error fetching data for route {route} and uid {uid}: {e}")
+            # print(f"Error fetching data for route {route} and uid {uid}: {e}")
 
     for route, uids in stop_dict.items(): 
         EstimateTime[route] = []

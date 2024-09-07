@@ -1,11 +1,10 @@
-# 匯入 爬蟲 的相關套件
 import requests
 from bs4 import BeautifulSoup
 
 def person(selectno: int):
     try: 
         course = {}
-        url = 'https://alcat.pu.edu.tw/choice/q_person.html'
+        url = 'https://alcat.pu.edu.tw/choice/q_person.php'
         data = {
             'selectno': selectno
         }

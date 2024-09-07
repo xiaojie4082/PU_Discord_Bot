@@ -11,3 +11,5 @@ mods/__pycache__/bus.cpython-311.pyc
 mods/__pycache__/course.cpython-311.pyc
 mods/__pycache__/punews.cpython-311.pyc
 mods/__pycache__/weather.cpython-311.pyc
+cmds/__pycache__/chat.cpython-311.pyc
+cmds/__pycache__/course.cpython-311.pyc
