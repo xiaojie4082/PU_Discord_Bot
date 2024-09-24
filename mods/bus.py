@@ -10,13 +10,13 @@ from dotenv import load_dotenv
 load_dotenv()
 app_id = os.getenv("TDX_ID")
 app_key = os.getenv("TDX_KEY")
+auth_url="https://tdx.transportdata.tw/auth/realms/TDXConnect/protocol/openid-connect/token"
 
+# 公車站牌代碼
 # 162 靜宜大學(校門), 主顧樓, 聖母堂(終), 聖母堂(起)
 # 301 靜宜大學(校門), 主顧樓, 靜園餐廳(終), 靜園餐廳(起)
 # 368 靜宜大學(校門), 主顧樓, 聖母堂(終), 聖母堂(起)
 # 300、302~310 靜宜大學(專用道), 往市區, 往海線
-
-auth_url="https://tdx.transportdata.tw/auth/realms/TDXConnect/protocol/openid-connect/token"
 stop_dict = {
     '162': ['TXG20091','TXG20092','TXG20093','TXG20094'], 
     # '300': ['TXG13567','TXG21478'],
@@ -33,6 +33,9 @@ stop_dict = {
     '368': ['TXG24503','TXG24504','TXG24505','TXG24506']
 } 
 
+# 取得公車即時到站時間
+# return: EstimateTime(公車即時到站時間)
+# {route: [time1, time2, time3, ...]}
 def EstimateTime():
 
     class Auth():
@@ -94,7 +97,6 @@ def EstimateTime():
                     EstimateTime[route].append("尚未發車")         
         except Exception as e:
             EstimateTime[route].append("尚未發車")
-            # print(url)
             # print(f"Error fetching data for route {route} and uid {uid}: {e}")
 
     for route, uids in stop_dict.items(): 
@@ -104,9 +106,4 @@ def EstimateTime():
             thread.start()
             thread.join()
 
-    # try:
-    #     with open(os.getenv("BUS_PATH"), 'w') as f:
-    #         json.dump(EstimateTime, f)
-    # except Exception as e:
-    #     print(f"An error occurred while opening Bus_Data.json: {e}")
     return EstimateTime

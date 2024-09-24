@@ -6,20 +6,12 @@ genai.configure(credentials=creds)
 generation_config = {
   "temperature": 0.5,
   "top_p": 1,
-  "max_output_tokens": 100
+  "max_output_tokens": 150
 }
 safety_settings = []
 
 def pu_chat(mes:str):
   model = genai.GenerativeModel(model_name="tunedModels/f-afisjjghb1pa",
-                  generation_config=generation_config,
-                  safety_settings=safety_settings)
-  prompt_parts = [mes]
-  response = model.generate_content(prompt_parts)
-  return response.text
-
-def gs_chat(mes:str):
-  model = genai.GenerativeModel(model_name="gemini-pro",
                   generation_config=generation_config,
                   safety_settings=safety_settings)
   prompt_parts = [mes]
@@ -37,16 +29,6 @@ def freshmanchat():
     data = request.get_json()
     message = data.get('message')
     response = pu_chat(message)
-    return response
-  except Exception as e:
-    return str(e), 500
-
-@app.route('/gschat', methods=['POST'])
-def gschat():
-  try:
-    data = request.get_json()
-    message = data.get('message')
-    response = gs_chat(message)
     return response
   except Exception as e:
     return str(e), 500

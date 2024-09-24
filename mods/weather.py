@@ -6,6 +6,8 @@ from dotenv import load_dotenv
 # 載入環境變數從 .env 檔案中
 load_dotenv()
 
+# 取得天氣資訊
+# return: weather_data(天氣資訊), weather_info(天氣資訊), icon_url(天氣圖示網址)
 def today_weather():
     
     key = os.getenv("CWA_KEY")

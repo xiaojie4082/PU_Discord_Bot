@@ -1,6 +1,8 @@
 import requests
 from bs4 import BeautifulSoup
 
+# 取得靜宜大學最新消息摘要
+# return: summary(摘要)
 def get_summary(href):
     try:
         html = requests.get(href)
@@ -8,10 +10,11 @@ def get_summary(href):
         summary = soup.find('meta', {'name': 'description'})['content'].strip()
         summary = BeautifulSoup(summary, 'html.parser').get_text()
     except Exception as e:
-        print(f"[get_summary()] Error occurred: {e}")
         summary = ""
     return summary
 
+# 回傳靜宜大學最新消息
+# return: title(標題), href(連結), summary(摘要)
 def get_pu_news():
     try:
         url = 'https://www.pu.edu.tw/p/422-1000-1011.php?Lang=zh-tw'
