@@ -66,6 +66,7 @@ class Chat(Cog_Extension):
             message_text = "```很抱歉未能解決您的問題，我會繼續努力改進！```"
             await interaction.response.send_message(message_text, ephemeral=True)
         button_unresolved.callback = button_unresolved_callback
+        view.add_item(button_unresolved)
 
         button_reprot = discord.ui.Button(label="回報錯誤", style=discord.ButtonStyle.danger)
         async def button_reprot_callback(interaction, chat_id=chat_id):
@@ -78,7 +79,7 @@ class Chat(Cog_Extension):
             await interaction.response.send_message(message_text, ephemeral=True)
         button_reprot.callback = button_reprot_callback
         view.add_item(button_reprot)
-        
+
         await message.edit_original_response(content=response.text, view=view)
 
 def setup(bot):
