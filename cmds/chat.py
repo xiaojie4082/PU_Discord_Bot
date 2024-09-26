@@ -55,6 +55,27 @@ class Chat(Cog_Extension):
             await interaction.response.send_message(message_text, ephemeral=True)
         button_reprot.callback = button_reprot_callback
         view.add_item(button_reprot)
+        button_resolved = discord.ui.Button(label="已解決", style=discord.ButtonStyle.success)
+        async def button_resolved_callback(interaction, chat_id=chat_id):
+            conn = sqlite3.connect("data/chat.db")
+            cur = conn.cursor()
+            cur.execute("UPDATE chat SET 狀態 = 'resolved' WHERE id = ?", (chat_id,))
+            conn.commit()
+            conn.close()
+            message_text = "```很開心能解決你的問題，感謝您的使用！```"
+            await interaction.response.send_message(message_text, ephemeral=True)
+        button_resolved.callback = button_resolved_callback
+        view.add_item(button_resolved)
+        button_unresolved = discord.ui.Button(label="未解決", style=discord.ButtonStyle.secondary)
+        async def button_unresolved_callback(interaction, chat_id=chat_id):
+            conn = sqlite3.connect("data/chat.db")
+            cur = conn.cursor()
+            cur.execute("UPDATE chat SET 狀態 = 'unresolved' WHERE id = ?", (chat_id,))
+            conn.commit()
+            conn.close()
+            message_text = "```很抱歉未能解決您的問題，我會繼續努力改進！```"
+            await interaction.response.send_message(message_text, ephemeral=True)
+        button_unresolved.callback = button_unresolved_callback
         await message.edit_original_response(content=response.text, view=view)
 
 def setup(bot):
