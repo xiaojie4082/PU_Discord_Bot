@@ -53,6 +53,7 @@ class Chat(Cog_Extension):
             conn.close()
             message_text = "```很開心能解決你的問題，感謝您的使用！```"
             await interaction.response.send_message(message_text, ephemeral=True)
+            view.clear_items()
         button_resolved.callback = button_resolved_callback
         view.add_item(button_resolved)
 
@@ -65,6 +66,7 @@ class Chat(Cog_Extension):
             conn.close()
             message_text = "```很抱歉未能解決您的問題，我會繼續努力改進！```"
             await interaction.response.send_message(message_text, ephemeral=True)
+            view.clear_items()
         button_unresolved.callback = button_unresolved_callback
         view.add_item(button_unresolved)
 
@@ -77,6 +79,7 @@ class Chat(Cog_Extension):
             conn.close()
             message_text = "```我們已收到您的錯誤已回報，回報編號為 " + str(chat_id) + "。如有任何疑問，請提供此編號與管理員聯繫，謝謝您！```"
             await interaction.response.send_message(message_text, ephemeral=True)
+            view.clear_items()
         button_reprot.callback = button_reprot_callback
         view.add_item(button_reprot)
 
