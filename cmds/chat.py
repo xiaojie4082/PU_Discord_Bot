@@ -56,7 +56,7 @@ class Chat(Cog_Extension):
         button_resolved.callback = button_resolved_callback
         view.add_item(button_resolved)
 
-        button_unresolved = discord.ui.Button(label="未解決", style=discord.ButtonStyle.secondary)
+        button_unresolved = discord.ui.Button(label="未解決", style=discord.ButtonStyle.success)
         async def button_unresolved_callback(interaction, chat_id=chat_id):
             conn = sqlite3.connect("data/chat.db")
             cur = conn.cursor()
