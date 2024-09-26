@@ -51,7 +51,7 @@ class Chat(Cog_Extension):
             cur.execute("UPDATE chat SET 狀態 = 'reported' WHERE id = ?", (chat_id,))
             conn.commit()
             conn.close()
-            message_text = "我們已收到您的錯誤已回報，回報編號為 " + str(chat_id) + "。如有任何疑問，請提供此編號與管理員聯繫，謝謝您！"
+            message_text = "```我們已收到您的錯誤已回報，回報編號為 " + str(chat_id) + "。如有任何疑問，請提供此編號與管理員聯繫，謝謝您！```"
             await interaction.response.send_message(message_text, ephemeral=True)
         button_reprot.callback = button_reprot_callback
         view.add_item(button_reprot)
