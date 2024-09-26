@@ -42,7 +42,7 @@ class Chat(Cog_Extension):
         chat_id = cur.lastrowid
         conn.close()
 
-        view = discord.ui.View()
+        view = discord.ui.View(timeout=None)
         # 建立三個狀態按鈕(resolved, unresolved, report)
         button_resolved = discord.ui.Button(label="已解決", style=discord.ButtonStyle.success)
         async def button_resolved_callback(interaction, chat_id=chat_id):
