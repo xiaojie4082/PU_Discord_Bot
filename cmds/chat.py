@@ -44,17 +44,6 @@ class Chat(Cog_Extension):
 
         view = discord.ui.View()
         # 建立三個狀態按鈕(resolved, unresolved, report)
-        button_reprot = discord.ui.Button(label="回報錯誤", style=discord.ButtonStyle.danger)
-        async def button_reprot_callback(interaction, chat_id=chat_id):
-            conn = sqlite3.connect("data/chat.db")
-            cur = conn.cursor()
-            cur.execute("UPDATE chat SET 狀態 = 'reported' WHERE id = ?", (chat_id,))
-            conn.commit()
-            conn.close()
-            message_text = "```我們已收到您的錯誤已回報，回報編號為 " + str(chat_id) + "。如有任何疑問，請提供此編號與管理員聯繫，謝謝您！```"
-            await interaction.response.send_message(message_text, ephemeral=True)
-        button_reprot.callback = button_reprot_callback
-        view.add_item(button_reprot)
         button_resolved = discord.ui.Button(label="已解決", style=discord.ButtonStyle.success)
         async def button_resolved_callback(interaction, chat_id=chat_id):
             conn = sqlite3.connect("data/chat.db")
@@ -66,6 +55,7 @@ class Chat(Cog_Extension):
             await interaction.response.send_message(message_text, ephemeral=True)
         button_resolved.callback = button_resolved_callback
         view.add_item(button_resolved)
+
         button_unresolved = discord.ui.Button(label="未解決", style=discord.ButtonStyle.secondary)
         async def button_unresolved_callback(interaction, chat_id=chat_id):
             conn = sqlite3.connect("data/chat.db")
@@ -76,6 +66,19 @@ class Chat(Cog_Extension):
             message_text = "```很抱歉未能解決您的問題，我會繼續努力改進！```"
             await interaction.response.send_message(message_text, ephemeral=True)
         button_unresolved.callback = button_unresolved_callback
+
+        button_reprot = discord.ui.Button(label="回報錯誤", style=discord.ButtonStyle.danger)
+        async def button_reprot_callback(interaction, chat_id=chat_id):
+            conn = sqlite3.connect("data/chat.db")
+            cur = conn.cursor()
+            cur.execute("UPDATE chat SET 狀態 = 'reported' WHERE id = ?", (chat_id,))
+            conn.commit()
+            conn.close()
+            message_text = "```我們已收到您的錯誤已回報，回報編號為 " + str(chat_id) + "。如有任何疑問，請提供此編號與管理員聯繫，謝謝您！```"
+            await interaction.response.send_message(message_text, ephemeral=True)
+        button_reprot.callback = button_reprot_callback
+        view.add_item(button_reprot)
+        
         await message.edit_original_response(content=response.text, view=view)
 
 def setup(bot):
