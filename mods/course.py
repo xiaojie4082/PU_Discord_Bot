@@ -1,6 +1,9 @@
 import requests
 from bs4 import BeautifulSoup
 
+# 課程餘額
+# return: course
+# {name: 課程名稱, limit: 人數上限, enrollment: 修課人數, remaining: 人數餘額}
 def person(selectno: int):
     try: 
         course = {}
@@ -35,6 +38,9 @@ def person(selectno: int):
         print(f"Error retrieving course information: {e}")
         return course
 
+# 課程綱要
+# return: course
+# {name: 課程名稱, instructor: 授課教師, time: 上課時段, description: 中文版課程簡介, grading: 評分方式及比重, evaluation: PUHub 課程評論, url: PUHub 課程評論網址, ai_mes: AI 分析}
 def syllabus(year: str, selectno: str):
     try: 
         course = {}
@@ -79,7 +85,10 @@ def syllabus(year: str, selectno: str):
     except Exception as e:
         print("Error retrieving syllabus information: " + str(e))
         return course
-                
+
+# 課程查詢
+# return: course_data, url
+#  [{選課代號: course_code, 上課班級: class_name, 修別: course_type, 科目名稱: course_name, 學分數: credit, 授課老師: teacher, 上課時間地點: schedule}]        
 def search(year: str, course_teacher: str, keyword: str):
     try: 
         if course_teacher == "課程":
