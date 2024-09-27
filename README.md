@@ -1,7 +1,6 @@
 # 靜宜小幫手
-.. image:: https://img.shields.io/badge/python-3.11-blue.svg
-    :target: https://www.python.org/downloads/release/python-3115/
-    :alt: Python3.11
+[![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/downloads/release/python-3115/)
+
 
 - [邀請機器人](https://discord.com/application-directory/976010011937488906)
 ## 簡介
