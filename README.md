@@ -1,5 +1,9 @@
 # 靜宜小幫手
+.. image:: https://img.shields.io/badge/python-3.11-blue.svg
+    :target: https://www.python.org/downloads/release/python-3115/
+    :alt: Python3.11
 
+- [邀請機器人](https://discord.com/application-directory/976010011937488906)
 ## 簡介
 > 專為靜宜大學學生設計的聊天機器人，快速解答校園生活中的各類問題，提供學術、生活、服務等多方面的支持，讓學生在校園中更便捷地獲取所需資訊。
 
