@@ -27,11 +27,17 @@ class Chat(Cog_Extension):
         訊息: str
     ):
         message = await ctx.respond('正在處理中...')
+        # 使用 aiohttp 發送非同步 HTTP 請求
         async with aiohttp.ClientSession() as session:
-            async with session.post('http://localhost:5000/puchat', json={'message': 訊息}) as response:
-                response = await response
-        if response.status_code != 200:
-            await message.edit_original_response(content="發生錯誤，請稍後再試")
+            try:
+                async with session.post('http://localhost:5000/puchat', json={'message': 訊息}) as response:
+                    if response.status != 200:
+                        await message.edit_original_response(content="發生錯誤，請稍後再試")
+                        return
+                    response_text = await response.text()
+            except aiohttp.ClientError as e:
+                await message.edit_original_response(content=f"HTTP 請求失敗: {e}")
+                return
         # 取得 user_id
         user_id = ctx.author.id
 
