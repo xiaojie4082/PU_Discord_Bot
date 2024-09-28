@@ -8,6 +8,7 @@ import requests
 import csv
 import os
 import sqlite3
+import aiohttp
 
 class Chat(Cog_Extension):
     def __init__(self, bot):
@@ -26,7 +27,9 @@ class Chat(Cog_Extension):
         訊息: str
     ):
         message = await ctx.respond('正在處理中...')
-        response = requests.post('http://localhost:5000/puchat', json={'message':訊息})
+        async with aiohttp.ClientSession() as session:
+            async with session.post('http://localhost:5000/puchat', json={'message': 訊息}) as response:
+                response = await response
         if response.status_code != 200:
             await message.edit_original_response(content="發生錯誤，請稍後再試")
         # 取得 user_id
