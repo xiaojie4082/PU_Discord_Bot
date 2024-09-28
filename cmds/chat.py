@@ -45,7 +45,7 @@ class Chat(Cog_Extension):
         conn = sqlite3.connect("data/chat.db")
         cur = conn.cursor()
         cur.execute("CREATE TABLE IF NOT EXISTS chat (id INTEGER PRIMARY KEY AUTOINCREMENT, 訊息 TEXT, 回應 TEXT, user_id INTEGER, 時間 TEXT, 狀態 TEXT)")
-        cur.execute("INSERT INTO chat (訊息, 回應, user_id, 時間, 狀態) VALUES (?, ?, ?, datetime('now', 'localtime'), 'no_reply_yet')", (訊息, response.text, user_id))
+        cur.execute("INSERT INTO chat (訊息, 回應, user_id, 時間, 狀態) VALUES (?, ?, ?, datetime('now', 'localtime'), 'no_reply_yet')", (訊息, response_text, user_id))
         conn.commit()
         # 紀錄此次對話的id
         chat_id = cur.lastrowid
@@ -89,7 +89,7 @@ class Chat(Cog_Extension):
         button_reprot.callback = button_reprot_callback
         view.add_item(button_reprot)
 
-        await message.edit_original_response(content=response.text, view=view)
+        await message.edit_original_response(content=response_text, view=view)
 
 def setup(bot):
     bot.add_cog(Chat(bot))
