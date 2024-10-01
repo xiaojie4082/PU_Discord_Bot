@@ -4,9 +4,9 @@ from load_creds import load_creds
 creds = load_creds()
 genai.configure(credentials=creds)
 generation_config = {
-  "temperature": 0.5,
+  "temperature": 1,
   "top_p": 1,
-  "max_output_tokens": 150
+  "max_output_tokens": 200
 }
 safety_settings = []
 
