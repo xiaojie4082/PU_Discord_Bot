@@ -11,7 +11,8 @@ generation_config = {
 safety_settings = []
 
 def pu_chat(mes:str):
-  model = genai.GenerativeModel(model_name="tunedModels/f-afisjjghb1pa",
+  model = genai.GenerativeModel(model_name="tunedModels/v2-sxgx8cmt1bgn",
+  # model = genai.GenerativeModel(model_name="tunedModels/f-afisjjghb1pa",
                   generation_config=generation_config,
                   safety_settings=safety_settings)
   prompt_parts = [mes]
