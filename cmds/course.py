@@ -88,7 +88,7 @@ class Course(Cog_Extension):
 
         message = await ctx.respond(embed=embed, view=view)
 
-        gs = requests.post('http://localhost:5000/gschat', json={'message':course["ai_mes"]})
+        gs = requests.post('http://localhost:5000/puchat', json={'message':course["ai_mes"]})
         embed.remove_field(3)
         embed.add_field(name="AI 分析：", value="```"+gs.text+"```", inline=False)
         await message.edit_original_response(embed=embed, view=view)
