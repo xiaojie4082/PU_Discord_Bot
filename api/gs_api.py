@@ -4,7 +4,7 @@ from load_creds import load_creds
 creds = load_creds()
 genai.configure(credentials=creds)
 generation_config = {
-  "temperature": 1,
+  "temperature": 0.9,
   "top_p": 1,
   "max_output_tokens": 200
 }
