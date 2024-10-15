@@ -23,6 +23,9 @@ from discord import option
 from discord.ext import commands
 from discord.ext import tasks
 
+# 匯入 sqlite3 套件
+import sqlite3
+
 # =============== 機器人初始設定 ===============
 
 # 創建 Discord intents 物件並啟用訊息內容 (message_content) 的接收
@@ -123,21 +126,26 @@ async def news_background_task():
     try:
         title, href, summary = get_pu_news()
 
-        with open(os.getenv("NEWS_PATH"), "r") as file:
-            file_content = file.read()
-            
-        if file_content != href and href != "":
-            with open(os.getenv("NEWS_PATH"), "w") as file:
-                file.write(href)
-            
-            embed = discord.Embed(title=title, url=href, description=summary+" <@&1148682637972602880>", color=0xffffff)
+        conn = sqlite3.connect("data/news.db")
+        cur = conn.cursor()
+        cur.execute("CREATE TABLE IF NOT EXISTS news (title TEXT, href TEXT, summary TEXT, time TEXT)")
+        cur.execute("SELECT * FROM news ORDER BY time DESC LIMIT 1")
+        try:
+            old_href = cur.fetchone()[1]
+        except:
+            old_href = "This is the first news"
+        if href != None and old_href != href:
+            cur.execute("INSERT INTO news (title, href, summary, time) VALUES (?, ?, ?, datetime('now', 'localtime'))", (title, href, summary))
+            embed = discord.Embed(title=title, description=summary, color=0xffffff)
             embed.set_footer(text="資料來源:靜宜大學校首頁/公告總覽")
             channel = bot.get_channel(986528578197942333)
-            await channel.send(embed=embed)
+            await channel.send("<@&1148682637972602880>", embed=embed)
+        conn.commit()
+        conn.close()
 
-            # 發送資料到 puhub
-            # data = {'message': href, 'time': int(time.time()), 'title': title + " - 靜宜大學校首頁"}
-            # response = requests.post('http://puhub.org/api/new_announcement.php', data=data)
+        # 發送資料到 puhub
+        # data = {'message': href, 'time': int(time.time()), 'title': title + " - 靜宜大學校首頁"}
+        # response = requests.post('http://puhub.org/api/new_announcement.php', data=data)
 
     except Exception as e:
         print(f"[news_background_task] Error occurred: {e}")
