@@ -136,7 +136,7 @@ async def news_background_task():
             old_href = "This is the first news"
         if href != None and old_href != href:
             cur.execute("INSERT INTO news (title, href, summary, time) VALUES (?, ?, ?, datetime('now', 'localtime'))", (title, href, summary))
-            embed = discord.Embed(title=title, description=summary, color=0xffffff)
+            embed = discord.Embed(title=title, url=href, description=summary, color=0xffffff)
             embed.set_footer(text="資料來源:靜宜大學校首頁/公告總覽")
             channel = bot.get_channel(986528578197942333)
             await channel.send("<@&1148682637972602880>", embed=embed)
