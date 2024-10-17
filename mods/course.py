@@ -79,6 +79,7 @@ def syllabus(year: str, selectno: str):
                         course["evaluation"] = " ".join([f"```{data[6]}```" for data in datas])
                     # AI 分析
                     course["ai_mes"] = f"以下是課程綱要，請提供我約 100~200 字修課分析，請不要列點、不要標題。\n- 課程名稱：{course['name']}\n- 授課教師：{course['instructor']}\n- 上課時段：{course['time']}\n- 課程簡介：{course['description']}\n- 評分方式：{course['grading']}"
+                    course["url"] = new_href
                     return course
         else:
             raise Exception("Failed to retrieve syllabus information. Response status code: " + str(response.status_code))
