@@ -6,13 +6,14 @@ genai.configure(credentials=creds)
 generation_config = {
   "temperature": 0.9,
   "top_p": 1,
-  "max_output_tokens": 200
+  "max_output_tokens": 250
 }
 safety_settings = []
 
 def pu_chat(mes:str):
-  model = genai.GenerativeModel(model_name="tunedModels/v2-sxgx8cmt1bgn",
+  # model = genai.GenerativeModel(model_name="tunedModels/v2-sxgx8cmt1bgn",
   # model = genai.GenerativeModel(model_name="tunedModels/f-afisjjghb1pa",
+  model = genai.GenerativeModel(model_name="tunedModels/v34-5ocljvjrqncr",
                   generation_config=generation_config,
                   safety_settings=safety_settings)
   prompt_parts = [mes]

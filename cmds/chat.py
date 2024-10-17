@@ -89,7 +89,7 @@ class Chat(Cog_Extension):
         button_reprot.callback = button_reprot_callback
         view.add_item(button_reprot)
 
-        await message.edit_original_response(content=response_text, view=view)
+        await message.edit_original_response(content=response_text + "\n-# 此功能目前處於測試階段，回覆的訊息可能會有誤，請您多加確認。", view=view)
 
 def setup(bot):
     bot.add_cog(Chat(bot))
