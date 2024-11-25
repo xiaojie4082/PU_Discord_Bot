@@ -30,6 +30,7 @@ def today_weather():
         # https://openweathermap.org/weather-conditions
         # https://opendata.cwa.gov.tw/opendatadoc/MFC/A0012-001.pdf
         Wx_icon_url = {
+            "晴天": "http://openweathermap.org/img/wn/01d@2x.png",
             "多雲": "http://openweathermap.org/img/wn/03d@2x.png",
             "多雲時晴": "http://openweathermap.org/img/wn/02d@2x.png",
             "晴時多雲": "http://openweathermap.org/img/wn/02d@2x.png",
@@ -53,7 +54,8 @@ def today_weather():
             "冰雹": "http://openweathermap.org/img/wn/13d@2x.png",
             "霾": "http://openweathermap.org/img/wn/50d@2x.png",
             "沙塵暴": "http://openweathermap.org/img/wn/50d@2x.png",
-            "乾燥": "http://openweathermap.org/img/wn/50d@2x.png"
+            "乾燥": "http://openweathermap.org/img/wn/50d@2x.png",
+            "暴風雪": "http://openweathermap.org/img/wn/13d@2x.png",
         }
         icon_url = Wx_icon_url[weather_data[0]["Wx"]["parameterName"]]
     except Exception as e:
