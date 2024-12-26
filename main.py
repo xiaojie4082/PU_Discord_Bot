@@ -36,6 +36,8 @@ intents.message_content = True
 load_dotenv()
 # 獲取 Discord 機器人令牌從環境變數
 bot_token = os.getenv("DISCORD_TOKEN")
+if bot_token is None:
+    raise ValueError("DISCORD_TOKEN is not set in the environment variables.")
 # 設置命令前綴和 intents
 bot = commands.Bot(command_prefix='/', intents=intents)
 
@@ -69,7 +71,23 @@ async def weather_background_task():
         view = discord.ui.View()
         view.add_item(button)
 
-        message = await bot.get_channel(1163298141563527250).fetch_message(1168157292651360328)
+        try:
+            message = await bot.get_channel(1163298141563527250).fetch_message(1168157292651360328)
+            try:
+                await message.edit(embed=embed, view=view)
+            except discord.Forbidden:
+                print("Forbidden to edit the message.")
+            except discord.HTTPException as e:
+                print(f"HTTP exception occurred while editing the message: {e}")
+        except discord.NotFound:
+            print("Message not found.")
+            return
+        except discord.Forbidden:
+            print("Forbidden to fetch the message.")
+            return
+        except discord.HTTPException as e:
+            print(f"HTTP exception occurred: {e}")
+            return
         await message.edit(embed=embed, view=view)
 
         # channel = bot.get_channel(1163298141563527250)
@@ -77,7 +95,7 @@ async def weather_background_task():
     except Exception as e:
         print(f"[weather_background_task] Error occurred: {e}")
 
-@tasks.loop(minutes=1)
+@tasks.loop(minutes=3)
 async def bus_background_task():
     try:
         Estimate = EstimateTime()
@@ -112,7 +130,17 @@ async def bus_background_task():
             # ":bus: `310` `" + Estimate["310"][0] + " / " + Estimate["310"][1] + "`\n"
         , color=0xffffff)
         embed.set_footer(text="更新時間：" + current_time + "\n" + "資料來源：https://tdx.transportdata.tw")
-        message = await bot.get_channel(1165339189462696118).fetch_message(1165343193324327064)
+        try:
+            message = await bot.get_channel(1165339189462696118).fetch_message(1165343193324327064)
+        except discord.NotFound:
+            print("Message not found.")
+            return
+        except discord.Forbidden:
+            print("Forbidden to fetch the message.")
+            return
+        except discord.HTTPException as e:
+            print(f"HTTP exception occurred: {e}")
+            return
         await message.edit(embed=embed)
 
         # 初始訊息
@@ -131,16 +159,23 @@ async def news_background_task():
         cur.execute("CREATE TABLE IF NOT EXISTS news (title TEXT, href TEXT, summary TEXT, time TEXT)")
         cur.execute("SELECT * FROM news ORDER BY time DESC LIMIT 1")
         try:
-            old_href = cur.fetchone()[1]
+            result = cur.fetchone()
+            old_href = result[1] if result else None
         except:
-            # old_href = "This is the first news"
-            pass
-        if href != None and old_href != href and title != "":
+            old_href = None
+
+        if href is not None and old_href != href and title != "":
             cur.execute("INSERT INTO news (title, href, summary, time) VALUES (?, ?, ?, datetime('now', 'localtime'))", (title, href, summary))
             embed = discord.Embed(title=title, url=href, description=summary, color=0xffffff)
             embed.set_footer(text="資料來源:靜宜大學校首頁/公告總覽")
             channel = bot.get_channel(986528578197942333)
             await channel.send("<@&1148682637972602880>", embed=embed)
+            try:
+                await channel.send("<@&1148682637972602880>", embed=embed)
+            except discord.Forbidden:
+                print("Forbidden to send the message.")
+            except discord.HTTPException as e:
+                print(f"HTTP exception occurred while sending the message: {e}")
         conn.commit()
         conn.close()
 
@@ -153,10 +188,10 @@ async def news_background_task():
 
 # =============== 機器人主程式 ===============
 
-# Logged in
+# Bot login event handler
 @bot.event
 async def on_ready():
-    print(f"Logged in as {bot.user}")
+    print(f"Bot logged in as {bot.user}")
     
     # 定時任務
     weather_background_task.start()
