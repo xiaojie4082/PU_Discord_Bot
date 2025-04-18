@@ -8,6 +8,7 @@ from discord.ext import commands
 from core.classes import Cog_Extension
 
 import requests
+import time
 
 class Course(Cog_Extension):
     def __init__(self, bot):
@@ -77,7 +78,7 @@ class Course(Cog_Extension):
         embed=discord.Embed(title="[" + course["name"] + "] [" + course["instructor"] + "] [" + course["time"] + "]", color=0x00b4ff)
         embed.add_field(name="課程簡介：", value="```" + course["description"] + "```", inline=False)
         embed.add_field(name="評分方式：", value="```" + course["grading"] + "```", inline=False)
-        embed.add_field(name="課程評論：", value=course["evaluation"], inline=False)
+        # embed.add_field(name="課程評論：", value=course["evaluation"], inline=False)
         embed.add_field(name="AI 分析：", value="```正在生成中...```", inline=False)
         
         view = discord.ui.View()
@@ -89,7 +90,8 @@ class Course(Cog_Extension):
         message = await ctx.respond(embed=embed, view=view)
 
         gs = requests.post('http://localhost:5000/puchat', json={'message':course["ai_mes"]})
-        embed.remove_field(3)
+
+        embed.remove_field(2)
         embed.add_field(name="AI 分析：", value="```"+gs.text+"```", inline=False)
         await message.edit_original_response(embed=embed, view=view)
 
@@ -113,6 +115,7 @@ class Course(Cog_Extension):
         embed.add_field(name="修課人數：", value=course["enrollment"], inline=True)
         embed.add_field(name="課程餘額：", value=course["remaining"], inline=True)
         await ctx.respond(embed=embed)
+        
 
 def setup(bot):
     bot.add_cog(Course(bot))

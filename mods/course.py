@@ -71,14 +71,14 @@ def syllabus(year: str, selectno: str):
                     # 評分方式及比重
                     course["grading"] = soup.find('th', string="評分方式及比重Grading Methods and Ratio ").find_next('td').text.strip() or "NULL"
                     # PUHub 課程評論
-                    course["url"] = f"http://puhub.org/api/course_evaluation.php?course={course['name']}&teacher={course['instructor']}"
-                    response = requests.get(course["url"])
-                    datas = response.json()
-                    course["evaluation"] = "```NULL```"
-                    if datas:
-                        course["evaluation"] = " ".join([f"```{data[6]}```" for data in datas])
+                    # course["url"] = f"http://puhub.org/api/course_evaluation.php?course={course['name']}&teacher={course['instructor']}"
+                    # response = requests.get(course["url"])
+                    # datas = response.json()
+                    # course["evaluation"] = "```NULL```"
+                    # if datas:
+                    #     course["evaluation"] = " ".join([f"```{data[6]}```" for data in datas])
                     # AI 分析
-                    course["ai_mes"] = f"以下是課程綱要，請提供我約 100~200 字修課分析，請不要列點、不要標題。\n- 課程名稱：{course['name']}\n- 授課教師：{course['instructor']}\n- 上課時段：{course['time']}\n- 課程簡介：{course['description']}\n- 評分方式：{course['grading']}"
+                    course["ai_mes"] = f"以下是課程綱要，請提供我約 100~200 字修課分析，請不要列點、不要標題。\n- 課程名稱：{course.get('name', '未找到課程名稱')}\n- 授課教師：{course.get('instructor', '未找到授課教師')}\n- 上課時段：{course.get('time', '未找到上課時段')}\n- 課程簡介：{course.get('description', '未找到課程簡介')}\n- 評分方式：{course.get('grading', 'NULL')}"
                     course["url"] = new_href
                     return course
         else:
